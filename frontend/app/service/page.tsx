@@ -60,7 +60,7 @@ export default function ServicePage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 md:py-12">
+        <div className="container mx-auto px-4 pt-24 pb-8 md:pt-32 md:pb-12">
             <div className="text-center mb-10">
                 <h1 className="text-3xl font-bold tracking-tight mb-4">Create Your Masterpiece</h1>
                 <p className="text-muted-foreground">Describe your vision, and let our AI bring it to life.</p>

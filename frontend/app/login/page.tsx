@@ -30,7 +30,7 @@ export default function LoginPage() {
                 <div className="text-center">
                     <Link href="/" className="inline-flex items-center gap-2 mb-6 hover:opacity-80 transition-opacity">
                         <Video className="w-8 h-8 text-primary" />
-                        <span className="font-bold text-2xl">AIVideo<span className="text-primary">.ai</span></span>
+                        <span className="font-bold text-2xl">AIVideo<span className="text-primary">.Ai</span></span>
                     </Link>
                     <h2 className="text-2xl font-bold tracking-tight">Welcome back</h2>
                     <p className="mt-2 text-sm text-muted-foreground">
@@ -54,9 +54,14 @@ export default function LoginPage() {
                         />
                     </div>
                     <div className="space-y-2">
-                        <label htmlFor="password" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                            Password
-                        </label>
+                        <div className="flex items-center justify-between">
+                            <label htmlFor="password" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                Password
+                            </label>
+                            <Link href="#" className="text-sm text-primary hover:underline">
+                                Forgot password?
+                            </Link>
+                        </div>
                         <Input
                             id="password"
                             type="password"

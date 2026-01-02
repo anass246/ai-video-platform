@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
-import { Wand2 } from 'lucide-react';
+import { Wand2, Image as ImageIcon } from 'lucide-react';
 
 interface PromptInputProps {
     onGenerate: (prompt: string) => void;
@@ -32,16 +32,22 @@ export default function PromptInput({ onGenerate, isGenerating }: PromptInputPro
                     />
                     <div className="flex items-center justify-between border-t border-border/50 bg-muted/20 p-3">
                         <div className="text-xs text-muted-foreground">
-                            {prompt.length} / 1000 characters
+                            {prompt.length} / 10000 characters
                         </div>
-                        <Button
-                            type="submit"
-                            disabled={!prompt.trim() || isGenerating}
-                            className="transition-all duration-300"
-                        >
-                            <Wand2 className="mr-2 h-4 w-4" />
-                            {isGenerating ? 'Generating...' : 'Generate Video'}
-                        </Button>
+                        <div className="flex items-center gap-2">
+                            <Button type="button" variant="secondary" className="gap-2" disabled={isGenerating}>
+                                <ImageIcon className="w-4 h-4" />
+                                Upload Pictures
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={!prompt.trim() || isGenerating}
+                                className="transition-all duration-300"
+                            >
+                                <Wand2 className="mr-2 h-4 w-4" />
+                                {isGenerating ? 'Generating...' : 'Generate Video'}
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </form>

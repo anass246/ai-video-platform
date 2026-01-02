@@ -4,21 +4,21 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 
 export default function Hero() {
     return (
-        <section className="relative overflow-hidden py-24 lg:py-32">
-            <div className="container px-4 md:px-6 relative z-10 flex flex-col items-center text-center">
+        <section className="relative overflow-hidden py-24 lg:py-32 flex flex-col items-center justify-center text-center">
+            <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col items-center justify-center">
                 <div className="inline-flex items-center rounded-full border border-border bg-background/50 px-3 py-1 text-sm text-muted-foreground backdrop-blur-sm mb-6">
                     <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
                     <span>AI-Powered Video Creation</span>
                 </div>
-                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 max-w-4xl mx-auto">
                     Transform ideas into <br className="hidden md:block" />
                     <span className="text-primary">professional videos</span> with AI
                 </h1>
-                <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8 mb-8">
+                <p className="max-w-2xl leading-normal text-muted-foreground sm:text-xl sm:leading-8 mb-8 mx-auto">
                     Create stunning 4K videos from text in seconds. No editing skills required.
                     Just describe your vision and let our AI handle the rest.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link href="/login">
                         <Button size="lg" className="group">
                             Get Started for Free
