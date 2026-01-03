@@ -20,7 +20,7 @@ export default function LoginPage() {
         // Simulate API call
         setTimeout(() => {
             setIsLoading(false);
-            router.push('/service');
+          router.push("/create");
         }, 1500);
     };
 
