@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -22,41 +23,54 @@ export default function ServicePage() {
     const [isGenerating, setIsGenerating] = useState(false);
     const [showVideo, setShowVideo] = useState(false);
     const [steps, setSteps] = useState<Step[]>(INITIAL_STEPS);
-
-    const handleGenerate = (prompt: string) => {
+    const [videoUrl, setVideoUrl] = useState<string | null>(null);
+    const handleGenerate = async (prompt: string) => {
+        // 1. كنبداو التحميل
         setIsGenerating(true);
         setShowVideo(false);
         setSteps(INITIAL_STEPS.map(s => ({ ...s, status: 'pending' })));
 
-        let currentStep = 0;
-
-        const interval = setInterval(() => {
+        try {
+            // كنبينو للمستخدم أننا بدينا
             setSteps(prev => {
                 const newSteps = [...prev];
-
-                // Mark previous step as completed
-                if (currentStep > 0) {
-                    newSteps[currentStep - 1] = { ...newSteps[currentStep - 1], status: 'completed' };
-                }
-
-                // Mark current step as processing
-                if (currentStep < newSteps.length) {
-                    newSteps[currentStep] = { ...newSteps[currentStep], status: 'processing' };
-                }
-
+                newSteps[0] = { ...newSteps[0], status: 'processing' };
                 return newSteps;
             });
 
-            currentStep++;
+            // 2. كنصيفطو الطلب للباكاند (Laravel)
+            const response = await fetch('http://127.0.0.1:8000/api/generate-video', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt: prompt }),
+            });
 
-            if (currentStep > INITIAL_STEPS.length) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    setIsGenerating(false);
-                    setShowVideo(true);
-                }, 1000);
+            const data = await response.json();
+
+            // 3. ملي كيجي الجواب
+            if (data.image_url) {
+                // كنسجلو رابط التصويرة (تأكد أن عندك setVideoUrl فبداية الملف)
+                if (typeof setVideoUrl === 'function') {
+                    setVideoUrl(data.image_url);
+                } else {
+                    console.log("Video URL:", data.image_url); // غير باش نشوفوها فالكونسول
+                }
+
+                // كنقولو للسيت صافي سالينا
+                setShowVideo(true);
+                setSteps(INITIAL_STEPS.map(s => ({ ...s, status: 'completed' })));
+            } else {
+                alert("Error: " + (data.error || "Failed to generate"));
             }
-        }, 1500);
+
+        } catch (error) {
+            console.error("Connection Error:", error);
+            alert("تأكد أن السيرفر ديال Laravel شاعل!");
+        } finally {
+            setIsGenerating(false);
+        }
     };
 
     return (
@@ -77,10 +91,15 @@ export default function ServicePage() {
 
                 {showVideo && (
                     <div className="w-full animate-in fade-in zoom-in duration-500">
-                        <VideoPlayer />
+                        {/* هنا التغيير: صيفطنا الرابط للكومبوننت */}
+                        <VideoPlayer videoUrl={videoUrl} />
+
                         <div className="mt-8 text-center">
                             <button
-                                onClick={() => setShowVideo(false)}
+                                onClick={() => {
+                                    setShowVideo(false);
+                                    setVideoUrl(null); // نخوا الرابط باش نعاودو من جديد
+                                }}
                                 className="text-sm text-primary hover:underline"
                             >
                                 Generate Another Video
@@ -92,3 +111,7 @@ export default function ServicePage() {
         </div>
     );
 }
+function setVideoUrl(image_url: any) {
+    throw new Error('Function not implemented.');
+}
+
